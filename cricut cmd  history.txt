@@ -1,0 +1,7 @@
+avrdude -c arduino -P com7 -p m128 -b 19200 -u -U flash:w:FreecutAL.hex
+
+avrdude -c arduino -P com7 -p m128 -b 19200 -u -V -U efuse:r:efuse123:i -v
+
+The avr-libc documentation would explain the use of fprintf_P and the PSTR() macro.
+The result could be an fprintf_P(lcd, PSTR( "Your string "));
+
