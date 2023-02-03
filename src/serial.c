@@ -26,7 +26,7 @@
 
 #include <avr/interrupt.h>
 #include "serial.h"
-
+#include "avrlib.h"
 
 uint8_t serial_rx_buffer[RX_BUFFER_SIZE];
 uint8_t serial_rx_buffer_head = 0;
