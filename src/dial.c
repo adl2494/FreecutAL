@@ -12,20 +12,19 @@
  * Each input is a simple voltage divider between 0 and 5V, with 
  * a few discrete settings where the pot clicks.
  *
- * This file is part of FreeExpression.
+ * This file is part of FreecutAL.
  *
- * https://github.com/thetazzbot/FreeExpression
  *
- * FreeExpression is free software: you can redistribute it and/or modify it
+ * FreecutAL is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License version 2.
  *
- * FreeExpression is distributed in the hope that it will be useful, but WITHOUT
+ * FreecutAL is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with FreeExpression. If not, see http://www.gnu.org/licenses/.
+ * along with FreecutAL. If not, see http://www.gnu.org/licenses/.
  *
  */
 
@@ -36,13 +35,14 @@
 #include "keypad.h"
 #include "dial.h"
 #include "timer.h"
-#include "display.h"
+#include "lcd.h"
 
 static uint8_t channel = 0;
 static unsigned char pvars[MAX_DIALS]; // holds previous values
 
 static unsigned char dial_adc[MAX_DIALS];
 static unsigned char dial_steps[MAX_DIALS] = { 25, 5, 5 }; // weak association !! should use struct instead 
+
 
 static int dial_setting( uint8_t dial )
 {	
@@ -91,6 +91,7 @@ void dial_poll( void )
 		pvars[DIAL_PRESSURE]=i;
 		timer_set_pen_pressure(i);
 		keypadSet_Pressure_state( );	// so that the +/- keys follow the Pressure settings
+	
 	}
 		
 #ifdef SIZE_WHEEL_IS_POTENTIOMETER

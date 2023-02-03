@@ -1,10 +1,12 @@
 /*
- * dial.h
+ * lcd.h
  *
- * Interface for front panel dials.
+ * support for LCD module
+ *
+ *
+ *
  *
  * This file is part of FreecutAL.
- *
  *
  * FreecutAL is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License version 2.
@@ -19,20 +21,25 @@
  *
  */
 
-#ifndef DIALS_H
-#define DIALS_H
+#ifndef LCD_H
+#define LCD_H
 
-// Enum to declare the ADC input channel numbers
-enum
-{ 
-    DIAL_SIZE =0,		// only on some machines this is a potentiometer, most have a quadrature encoder for the RH dial
-    DIAL_SPEED,
-    DIAL_PRESSURE,
-    MAX_DIALS
-};
+#include <stdio.h>
+#include <inttypes.h>
 
+extern FILE lcd;
 
-extern void dial_poll( void );
-extern void dial_init( void );
-
+void lcd_init( void );
+void lcd_backlight_on( void );
+void lcd_backlight_off( void );
+int lcd_putchar( char c, FILE *stream );
+int lcd_getchar( FILE *stream );
+void lcd_pos( uint8_t pos );
+void lcd_puthex( uint8_t x );
+void lcd_clear( void);
+void lcd_report_pressure(void);
+void lcd_report_speed(void);
+void lcd_report_pressure1(void);
+void lcd_report_speed1(void);
+void sync_states(void);
 #endif

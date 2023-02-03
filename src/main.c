@@ -1,24 +1,28 @@
 /*
+ * FreecutAL.c
  * main.c
+ *
+ * Created: 1/22/2023 2:00:55 PM
+ * Author : AL
  * 
- * FreeExpression firmware, main program
+ * FreecutAL firmware, main program
  *
- * This source original developed by  https://github.com/Arlet/Freecut
+ * This source originally developed by  https://github.com/Arlet/Freecut
+ * Further Developed by https://github.com/thetazzbot/FreeExpression
+ * This Iteration by https://github.com/adl2494/FreecutAL/ 
+ * This file is part of FreecutAL.
  *
- * This file is part of FreeExpression.
  *
- * https://github.com/thetazzbot/FreeExpression
- *
- * FreeExpression is free software: you can redistribute it and/or modify it
+ * FreecutAL is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License version 2.
  *
- * FreeExpression is distributed in the hope that it will be useful, but WITHOUT
+ * FreecutAL is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with FreeExpression. If not, see http://www.gnu.org/licenses/.
+ * along with FreecutAL. If not, see http://www.gnu.org/licenses/.
  *
  */
 
@@ -30,14 +34,15 @@
 
 #include "usb.h"
 #include "keypad.h"
+#include "lcd.h"				
 #include "timer.h"
 #include "stepper.h"
 #include "cli.h"
-#include "flash.h"
 #include "version.h"
 #include "dial.h"
 #include "hpgl.h"
-#include "display.h"
+
+
 void setup(void);
 
 
@@ -45,31 +50,34 @@ void setup(void)
 {
 	// Watchdogging disabled -- No use while debugging / testing 
 	//wdt_enable( WDTO_30MS );
-	keypad_init( );
-	display_init();
-	usb_init();
 	timer_init( );
+	keypad_init( );
+	lcd_init();
+	sei();	
+	usb_init();
 	stepper_init( );
-	flash_init( );
 	hpgl_init();
 	dial_init( );
-		
 	sei();					// Start interrupts -- Motors will home immediately following this
-	
+	dial_poll();
 	msleep(100);
+	dial_poll();
+	msleep(100);
+	dial_poll();
+	msleep(100);
+	sync_states();
+	//msleep(100);
+	//usb_puts("\f");
+	//usb_puts(VERSION);
+	lcd_clear();
+	fprintf( &lcd, "FreecutAL");
+	sync_states();
 	
-	//display_print(VERSION);
-	
-	usb_puts("\f");
-	usb_puts(VERSION);
-
 }
-
 
 int main( void )
 {
 	setup();
-	display_update();
     while( 1 )
     {
         cli_poll( ); // polls ready bytes from USB  and processes them
@@ -80,9 +88,7 @@ int main( void )
 			
 			dial_poll( );  // polls the dials and processes their state
 			keypad_poll( ); // polls the keypad and executes functions
-			//display_update();
-
-		}
+			}
 		if( flag_Hz )
 		{
 			flag_Hz = 0;

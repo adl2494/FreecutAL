@@ -9,20 +9,22 @@
 * TODO: Implement store - or - cut feature
 * TODO: Implement retrieve and cut feature
 *
-* This file is part of FreeExpression.
+* This file is part of FreecutAL.
 *
-* https://github.com/thetazzbot/FreeExpression
+* This source originally developed by  https://github.com/Arlet/Freecut
+* Further Developed by https://github.com/thetazzbot/FreeExpression
+* This Iteration by https://github.com/adl2494/FreecutAL/ 
 *
-* FreeExpression is free software: you can redistribute it and/or modify it
+* FreecutAL is free software: you can redistribute it and/or modify it
 * under the terms of the GNU General Public License version 2.
 *
-* FreeExpression is distributed in the hope that it will be useful, but WITHOUT
+* FreecutAL is distributed in the hope that it will be useful, but WITHOUT
 * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
 * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
 * License for more details.
 *
 * You should have received a copy of the GNU General Public License
-* along with FreeExpression. If not, see http://www.gnu.org/licenses/.
+* along with FreecutAL. If not, see http://www.gnu.org/licenses/.
 *
 */
 
@@ -44,13 +46,13 @@
 #include "shvars.h"
 #include "hpgl.h"
 #include "g_code.h"
-#include "display.h"
+#include "lcd.h"
 #include "keypad.h"
 void cli_poll(void)
 {
 	STEPPER_COORD dstx, dsty;
 	char c;
-	int8_t cmd;
+	char cmd = 0;
 	uint8_t labelchar;
 	
 	
@@ -63,7 +65,7 @@ void cli_poll(void)
 			break;
 			
 			case G_CODE:
-			cmd = gcode_char(c, &dstx, &dsty );
+			//cmd = gcode_char(c, &dstx, &dsty );
 			break;
 			
 			//case GPGL:

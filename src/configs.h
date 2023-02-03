@@ -37,9 +37,9 @@
 
 #define SPEED_SKIP	25
 
-#ifdef MACHINE_EXPRESSION
+//#ifdef MACHINE_EXPRESSION
 #define SIZE_WHEEL_IS_POTENTIOMETER
-#endif
+//#endif
 
 // enable or disable onboard flash chip debugging
 // press key F1 on the keybad to do a flash test

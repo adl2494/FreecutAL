@@ -4,20 +4,19 @@
  * The USB port is a UART, connected to a FTDI chip. 
  * This file is a wrapper on top of the low level serial routines found in serial.c
  * 
- * This file is part of FreeExpression.
+ * This file is part of FreecutAL.
  *
- * https://github.com/thetazzbot/FreeExpression
  *
- * FreeExpression is free software: you can redistribute it and/or modify it
+ * FreecutAL is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License version 2.
  *
- * FreeExpression is distributed in the hope that it will be useful, but WITHOUT
+ * FreecutAL is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with FreeExpression. If not, see http://www.gnu.org/licenses/.
+ * along with FreecutAL. If not, see http://www.gnu.org/licenses/.
  *
  */
 
@@ -28,7 +27,7 @@
 #include <stdio.h>
 #include "usb.h"
 #include "serial.h"
-
+#include "avrlib.h"
 
 void usb_puts(const char *s )
 {

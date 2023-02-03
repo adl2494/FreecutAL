@@ -16,27 +16,26 @@
  * pushed. This button detects when the gray cover on the pen holder is
  * moved all the way to the 'home' position.
  * 
- * Step resolution is about 400 steps/inch. For a 12x12 inch mat, that means
- * there's about 4800x4800 steps of usable space. Coordinate origin is the
+ * Step resolution is about 400 steps/inch. For a 6x12 inch mat, that means
+ * there's about 2400x4800 steps of usable space. Coordinate origin is the
  * blade starting point on the mat. A small amount of negative X is allowed
  * to roll the mat out of the machine.
  *
  * This source original developed by  https://github.com/Arlet/Freecut
  *
- * This file is part of FreeExpression.
+ * This file is part of FreecutAL.
  *
- * https://github.com/thetazzbot/FreeExpression
  *
- * FreeExpression is free software: you can redistribute it and/or modify it
+ * FreecutAL is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License version 2.
  *
- * FreeExpression is distributed in the hope that it will be useful, but WITHOUT
+ * FreecutAL is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with FreeExpression. If not, see http://www.gnu.org/licenses/.
+ * along with FreecutAL. If not, see http://www.gnu.org/licenses/.
  *
  */
 
@@ -48,11 +47,11 @@
 #include "stepper.h"
 #include "keypad.h"
 #include "timer.h"
-#include "display.h"
+#include "lcd.h"
 
 #define MAT_EDGE	250			// distance to roll to load mat 
 #define HOME_Y_LEAD 100		// distance to move the carriage out before homing.
-#define MAX_Y		4800		// This is the width of the carriage 4800 == 12"
+#define MAX_Y		2400		// This is the width of the carriage 4800 == 12"
 //#define MAX_X		4800		// This is the length of the cutting media, for vinyl off the roll make this as long as the var can hold (signed)
 #define MAX_X		32000		// That's 80 inches of vinyl cutting -- 	
 #define MOTOR_OFF_DEL 30000		// number of iterations through the ISR after last motor movement before the stepper power gets turned off 
@@ -330,28 +329,31 @@ void stepper_jog_manual(int direction, int dist)
 		case KEYPAD_MOVEUP:
 			stepper_jogRelative(dist,0);
 			break;
-		case KEYPAD_MOVEUPLEFT:
+	/*	case KEYPAD_MOVEUPLEFT:
 			stepper_jogRelative(dist,dist);
 			break;
+	*/
 		case KEYPAD_MOVELEFT:
 			stepper_jogRelative(0,dist);
 			break;
-		case KEYPAD_MOVEDNLEFT:
+	/*	case KEYPAD_MOVEDNLEFT:
 			stepper_jogRelative(-dist,dist);
 			break;
+		*/
 		case KEYPAD_MOVEDN:
 			stepper_jogRelative(-dist,0);
 			break;
-		case KEYPAD_MOVEDNRIGHT:
+	/*	case KEYPAD_MOVEDNRIGHT:
 			stepper_jogRelative(-dist,-dist);
 			break;
+		*/
 		case KEYPAD_MOVERIGHT:
 			stepper_jogRelative(0,-dist);
 			break;
-		case KEYPAD_MOVEUPRIGHT:
+	/*	case KEYPAD_MOVEUPRIGHT:
 			stepper_jogRelative(dist,-dist);
 			break;
-		
+		*/
 	}
 	
 }
@@ -404,8 +406,7 @@ void stepper_pressure( int pressure )
  * The original firmware also removes the PWM signal, but it seems 
  * to work OK when you leave it on.
  */
-void 
-pen_up( void )
+void pen_up( void )
 {
     if( PORTE & PEN )
         step_delay = 50;
@@ -416,8 +417,7 @@ pen_up( void )
 /*
  * move pen down
  */
- void 
- pen_down( void )
+ void pen_down( void )
 {
 	int pe=PORTE;
 	
